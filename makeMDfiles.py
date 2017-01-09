@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+#
+# makeMDfiles.py SERIES SEASON CSVFILE
 
 import sys
 import csv
-import pprint
 
 # Code for series
 # ENT - Enterprise
