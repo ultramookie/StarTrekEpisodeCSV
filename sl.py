@@ -88,14 +88,6 @@ def copy_style(config):
   dest_file = config['output'] + '/' + filename
   shutil.copyfile(css_file,dest_file)
 
-# Copy the latest html file to be index file
-def copy_index_into_place(config):
-  index_file = config['output'] + '/index.html'
-  html_files = sorted(glob.glob(config['output'] + '/*/*.html'), reverse=True)
-  for html_file in html_files:
-    path,filename = os.path.split(html_file)
-    shutil.copyfile(html_file,index_file)
-
 # Create dir
 def make_dir(dir):
   try:
@@ -135,7 +127,7 @@ def process_entries(input_dir,config):
 
 # Let people find their way around
 def create_archive_page(input_dir,config):
-  index_filename = config['output'] + '/archive.html'
+  index_filename = config['output'] + '/index.html'
   author = config['author']
   metadata = ['','','',author]
   output_dir = config['output']
@@ -145,7 +137,7 @@ def create_archive_page(input_dir,config):
   header_html = render_jinja(header_template,metadata,config)
   footer_html = render_jinja(footer_template,metadata,config)
   entry_files = get_completed_entries(input_dir)
-  index_filecontents = '%s<h1>Archive</h1>' % header_html 
+  index_filecontents = '%s' % header_html 
   for entry_file in entry_files:
     base_filename = os.path.splitext(entry_file)[0]
     metadata = get_meta_data(base_filename)
@@ -213,7 +205,6 @@ def run():
   copy_style(config)
   process_entries(input_dir,config)
   create_archive_page(input_dir,config)
-  copy_index_into_place(config)
   create_rss_feed(input_dir,config)
 
 # Make it so!
